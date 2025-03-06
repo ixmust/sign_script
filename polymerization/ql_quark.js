@@ -1,11 +1,12 @@
 /*
     name: "夸克网盘"
     cron: 10 30 10 * * *
-    脚本兼容: 金山文档（1.0），金山文档（2.0）， 青龙
-    更新时间：20241226
+    脚本兼容: 金山文档（1.0）， 青龙
+    更新时间：20250306
     环境变量名：quark
-    环境变量值：填写手机app抓包的一个GET请求包，并且含sign的url，建议含growth/info的url。
+    环境变量值：填写手机app抓包的一个GET请求包，并且含sign的url，推荐用含growth/info的url。
                 必须是抓夸克APP中的夸克网盘。
+                若抓不到上述url，只需要抓到含sign的url就行，推荐用这个开头的url：https://drive-m.quark.cn/
 */
 
 const logo = "艾默库 : https://github.com/imoki/sign_script"    // 仓库地址
@@ -485,14 +486,15 @@ function resultHandle(resp, pos){
                 isSign = resp["data"]["cap_sign"]["sign_daily"]
             }catch{
                 content = "⛔ " + "账号可能未登录，请重新登录 "
+                messageFail += content
                 // messageFail += content
                 // messageSuccess += "帐号：" + messageName + "已经签到过了,奖励容量"  + String(number) + "MB";
                 console.log(content)
-                
-                // // 青龙适配，青龙微适配
-                // flagResultFinish = 1; // 签到结束
+                isSign = false;
 
             }
+
+            sleep(2000);
 
             // isSign = ~true // 测试
         }else{
@@ -509,20 +511,27 @@ function resultHandle(resp, pos){
       // console.log(isSign)
       if(isSign == true)
       {
-        console.log("📢 " + "已经签到过了")
-        reward = resp["data"]["cap_sign"]["sign_daily_reward"] / (1024 * 1024)
-        cur_total_sign_day = resp["data"]["cap_growth"]["cur_total_sign_day"] // 总签到天数
-        sign_progress = resp["data"]["cap_sign"]["sign_progress"] // 当周签到天数
+        try {
+          console.log("📢 " + "已经签到过了")
+          reward = resp["data"]["cap_sign"]["sign_daily_reward"] / (1024 * 1024)
+          cur_total_sign_day = resp["data"]["cap_growth"]["cur_total_sign_day"] // 总签到天数
+          sign_progress = resp["data"]["cap_sign"]["sign_progress"] // 当周签到天数
+          
+          // console.log(reward)
+          // content = "帐号：" + messageName + "已经签到过了,奖励"  + String(number) + "MB" + ",总签到" + cur_total_sign_day + "天 " + ",当周已签" + sign_progress + "天 ";
+          content = "📢 " + "总签" + cur_total_sign_day + "天" + ",周签" + sign_progress + "天,获"  + String(reward) + "MB ";
+          messageSuccess += content
+          // messageSuccess += "帐号：" + messageName + "已经签到过了,奖励容量"  + String(number) + "MB";
+          // console.log(content)
+        } catch {
+          console.log("📢 " + "签到失败")
+          messageFail += content
+        }
         
-        // console.log(reward)
-        // content = "帐号：" + messageName + "已经签到过了,奖励"  + String(number) + "MB" + ",总签到" + cur_total_sign_day + "天 " + ",当周已签" + sign_progress + "天 ";
-        content = "📢 " + "总签" + cur_total_sign_day + "天" + ",周签" + sign_progress + "天,获"  + String(reward) + "MB ";
-        messageSuccess += content
-        // messageSuccess += "帐号：" + messageName + "已经签到过了,奖励容量"  + String(number) + "MB";
-        // console.log(content)
         
         // 青龙适配，青龙微适配
         flagResultFinish = 1; // 签到结束
+        sleep(2000);
       }else
       {
         if(posHttp == 1 || qlSwitch != 1){  // 第一次进来时用
@@ -645,6 +654,8 @@ function resultHandle(resp, pos){
             // 青龙适配，青龙微适配
             flagResultFinish = 1; // 签到结束
         }
+
+        sleep(2000);
             
         //   }
       }
