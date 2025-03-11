@@ -458,7 +458,7 @@ function resultHandle(resp, pos){
     
     if (resp.status == 200) {
         resp = resp.json(); // 返回json格式则resp.json()。否则为resp.text()，此时就要用正则处理响应
-        console.log(resp)
+        //console.log(resp)
         
 
         // （修改这里，这里就是自己写了，根据抓包的响应自行修改）
@@ -642,7 +642,7 @@ function execHandle(cookie, pos) {
     let log = getlog()
     // （修改这里，这里填抓包获取header，全部抄进来就可以了，按照如下用引号包裹的格式，其中小写的cookie是从表格中读取到的值。）
     headers= {
-      "Authorization": cookie,
+      "Authorization": bearerPrefix(cookie),
       "Content-Type": "application/json",
     }
     // （修改这里，这里填抓包获取data，全部抄进来就可以了，按照如下用引号包裹的格式。POST请求才需要这个，GET请求就不用它了）
@@ -701,4 +701,21 @@ function execHandle(cookie, pos) {
     if(qlSwitch != 1){  // 选择金山文档
         resultHandle(resp, pos)
     }
+}
+
+// 检查 Authorization 是否已经以 bearer 开头
+function bearerPrefix(authorization) {
+  if(authorization.startsWith('bearer '))
+  {
+    return authorization;
+  }
+
+  if(authorization.startsWith('Bearer '))
+  {
+    return authorization;
+  }
+
+  authorization = 'Bearer ' + authorization;
+
+  return authorization;
 }
