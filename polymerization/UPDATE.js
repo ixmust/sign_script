@@ -1,10 +1,11 @@
 /*
     脚本名称：UPDATE.js
     脚本兼容: airsript 1.0、airscript 2.0
-    更新时间：20241226
+    更新时间：20250311
     备注：更新脚本。用于自动生成表格，以及追加表格数据
           适配airsript 1.0版本及airscript 2.0版本
     其他：若想添加新内容，请搜索（修改这里），按照格式修改
+    AI：增加deepseek分析工具
 */
 
 var confiWorkbook = 'CONFIG'  // 主配置表名称
@@ -102,6 +103,7 @@ var configBody = [
     { name: 'hfweather', note: '和风天气', pushPriority: '1',},
     { name: 'dml', note: '达美乐',},
     { name: 'ciba', note: '词霸每日一句',},
+    { name: 'deepseek', note: 'deepseek分析工具',},
 
     // { name: '（修改这里）', note: '（修改这里）',},  // 添加新增内容
 ];
@@ -258,6 +260,13 @@ var subConfigCiba = [
   ['xxxxxxxx2', '否', '昵称2', '是', '是']
 ]
 
+// 定制化分配置表内容，deepseek
+var subConfigDeepseek = [
+  ['cookie(默认20个)', '是否执行(是/否)', '账号名称(可不填写)', '模型', '提示词'],
+  ['xxxxxxxx1', '是', '昵称1', 'deepseek-r1-distill-qwen-32b', '请用中文说明哪些运行失败了，带上有趣的emoji，限制在100字以内。'],
+  ['xxxxxxxx2', '否', '昵称2', '', '']
+]
+
 // 定制化表
 var subConfig = {
   "ddmc"  : subConfigDdmc, 
@@ -274,6 +283,7 @@ var subConfig = {
   "xmdl":subConfigXmdl,
   "hfweather":subConfigHfweather,
   "ciba":subConfigCiba,
+  "deepseek" : subConfigDeepseek,
 }
 // var mosaic = "xxxxxxxx" // 马赛克
 // var strFail = "否"
