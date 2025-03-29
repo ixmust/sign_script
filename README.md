@@ -36,12 +36,6 @@
 4. 感谢遵循以上几点的各位  
 -->
 
-## ✈️ 群和频道 
-🔮 <a href="https://t.me/mokuchat">@mokuchat</a><br>
-📻️ <a href="https://t.me/mokuchannel">@mokuchannel</a>
-
-## 🍨 教程 
-📖 <a href="https://jewel-pullover-9d0.notion.site/dfec17946a164658bb77e9682df954a2?pvs=4">艾默库教程</a>
 
 ## 📌 特别声明
 
