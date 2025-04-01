@@ -61,10 +61,10 @@ var configBody = [
     { name: 'ztebbs', note: '中兴社区',},
     { name: 'mi', note: '小米商城',},
     { name: 'kanxue', note: '看雪论坛',},
-    { name: 'bilibili', note: '哔哩哔哩',},
+    { name: 'xxx', note: 'xxx', isAlive: '否',},
     { name: 'vivo', note: 'vivo社区',},
     { name: 'xxx', note: '', isAlive: '否',},
-    { name: 'wps_daka', note: 'wps(打卡版）',},
+    { name: 'xxx', note: 'xxx',},
     { name: 'golo', note: 'golo汽修大师',},
     { name: 'xxx', note: '', isAlive: '否',},
     { name: 'aliyun', note: '阿里云盘(自动更新token版)',},
@@ -86,12 +86,12 @@ var configBody = [
     { name: 'kyt', note: '科研通',},
     { name: 'parsdata', note: '伊朗域名注册优惠码',},
     { name: 'quarksave', note: '夸克订阅更新自动转存',},
-    { name: 'games70', note: '70games',},
+    { name: 'xxx', note: 'xxx', isAlive: '否',},
     { name: 'xxx', note: '', isAlive: '否',},
     { name: 'xxx', note: '', isAlive: '否',},
     { name: 'yhsh', note: '永辉生活',},
     { name: 'xpnc', note: '兴攀农场',},
-    { name: 'bwcj', note: '霸王茶姬',},
+    { name: 'xxx', note: 'xxx', isAlive: '否',},
     { name: 'syns', note: '所有女生',},
     { name: 'qcs', note: '屈臣氏',},
     { name: 'hdl', note: '海底捞',},
@@ -204,20 +204,6 @@ var subConfigParsdata = [
   ['xxxxxxxx2', '否', '昵称2', '']
 ]
 
-// 定制化分配置表内容，雨云
-var subConfigRainyun = [
-  ['cookie(默认20个)', '是否执行(是/否)', '账号名称(可不填写)', '账号', '密码'],
-  ['xxxxxxxx1', '是', '昵称1', '', ''],
-  ['xxxxxxxx2', '否', '昵称2', '', '']
-]
-
-// 定制化分配置表内容，霸王茶姬
-var subConfigBwcj = [
-  ['cookie(默认20个)', '是否执行(是/否)', '账号名称(可不填写)', 'userid'],
-  ['xxxxxxxx1', '是', '昵称1', ''],
-  ['xxxxxxxx2', '否', '昵称2', '']
-]
-
 // 定制化分配置表内容，海底捞
 var subConfigHdl = [
   ['cookie(默认20个)', '是否执行(是/否)', '账号名称(可不填写)', 'uid'],
@@ -275,8 +261,6 @@ var subConfig = {
   "aliyun" : subConfigAliyunToken,
   "hxek" : subConfigHxek,
   "parsdata":subConfigParsdata,
-  "rainyun":subConfigRainyun,
-  "bwcj":subConfigBwcj,
   "hdl":subConfigHdl,
   "qcs":subConfigQcs,
   "eswxlt":subConfigEswxlt,
