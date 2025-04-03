@@ -462,7 +462,7 @@ function resultHandle(resp, pos){
 
     if (resp.status == 200) {
       resp = resp.json();
-      console.log(resp)
+      // console.log(resp)
       status = resp["status"]
       
       if(status == 200)
@@ -545,51 +545,6 @@ function execHandle(cookie, pos) {
     data,
       { headers: headers }
     );
-
-
-
-    // // 商城签到
-    // params = "?method=member.checkIn.add&format=json&v=v1&sign=&accessToken=token%24%24xxxxx"
-    // headers={
-    //   "Host": "www.ztemall.com",
-    //   "Cookie": ztemallcookie, 
-    // }
-    // resp = HTTP.fetch(url2 + params, {
-    //   method: "get",
-    //   headers: headers,
-    //   // data: data
-    // });
-
-    // // {"errorcode":0,"msg":"","data":{"checkin_days":1,"currentCheckInPoint":"10","point":1010,"status":"success"}}
-    // // {"errorcode":"10000","msg":"会员签到记录保存失败","data":{}}
-    // // {"errorcode":20001,"msg":"invalid token","data":{}}
-    // if (resp.status == 200) {
-    //   resp = resp.json();
-    //   console.log(resp)
-    //   errorcode = resp["errorcode"]
-      
-    //   if(status == 0)
-    //   {
-    //     msg = resp["msg"]
-    //     checkin_days = resp["data"]["checkin_days"] // 签到天数
-    //     currentCheckInPoint = resp["data"]["currentCheckInPoint"] // 获得积分
-    //     point = resp["data"]["point"] // 总积分
-
-    //     content = msg + " 已签" + continueDays + "天 "
-    //     messageSuccess += content;
-    //     console.log(content)
-    //   }else
-    //   {
-    //     content = "签到失败 "
-    //     messageFail += content;
-    //     console.log(content);
-    //   }
-    // } else {
-    //   content = "签到失败 "
-    //   messageFail += content;
-    //   console.log(content);
-    // }
-
 
   // } catch {
   //   messageFail += messageName + "失败";

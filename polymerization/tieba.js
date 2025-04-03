@@ -1,5 +1,5 @@
 /*
-    name: "百度贴吧自动签到"
+    name: "百度贴吧"
     cron: 45 0 9 * * *
     脚本兼容: 金山文档（1.0）
     更新时间：20241226
@@ -428,7 +428,6 @@ function getsign(data) {
 
 // =================共用结束===================
 
-
 // cookie字符串转json格式
 function cookie_to_json(cookies) {
   var cookie_text = cookies;
@@ -442,181 +441,15 @@ function cookie_to_json(cookies) {
   return JSON.parse(res);
 }
 
-// 具体的执行函数
-function execHandle(cookie, pos) {
-  let messageSuccess = "";
-  let messageFail = "";
-  let messageName = "";
-  // 推送昵称或单元格，还是不推送位置标识
-  if (messageNickname == 1) {
-    // 推送昵称或单元格
-    messageName = Application.Range("C" + pos).Text;
-    if(messageName == "")
-    {
-      messageName = "单元格A" + pos + "";
-    }
-  }
-
-  posLabel = pos-2 ;  // 存放下标，从0开始
-  messageHeader[posLabel] = "👨‍🚀 " + messageName
-  try {
-
-    cookie_json = cookie_to_json(cookie);
-    try {
-      BDUSS = cookie_json["BDUSS"];  // 只需要BDUSS
-      if(BDUSS != "" && BDUSS != "undefined" && BDUSS != undefined)
-      {
-        cookie = BDUSS
-        console.log("🍳 读取到的cookie为原始ck，提取其中的BDUSS")
-      }
-    }catch
-    {
-      console.log("🍳 BDUSS搜寻失败")
-    }
-
-    // 获取tbs
-    // let resp = HTTP.fetch("http://tieba.baidu.com/dc/common/tbs", {
-    //   method: "get",
-    //   headers: {
-    //     Cookie: "BDUSS=" + cookie,
-    //   },
-    // });
-
-    resp = HTTP.get("http://tieba.baidu.com/dc/common/tbs", 
-    {
-      headers: {
-        Cookie: "BDUSS=" + cookie,
-      },
-    });
-    resp = resp.json();
-    var tbs = resp["tbs"];
-    sleep(1000);
-
-    // 获取关注列表
-    var ts = getts();
-    var sign = getsign(cookie, ts);
-    var data_favorite = getdata(cookie, ts, sign);
-    let res_favorite = HTTP.post(
-      "http://c.tieba.baidu.com/c/f/forum/like",
-      data_favorite
-    );
-    res_favorite = res_favorite.json();
-    // console.log(res_favorite['forum_list']["non-gconforum"])
-    sleep(1000);
-
-    // messageSuccess += "账户：" + messageName + " ";
-    // 签到
-    var arr_favorite = res_favorite["forum_list"]["non-gconforum"];
-    for (var j = 0; j < arr_favorite.length; j++) {
-      client_sign(cookie, tbs, arr_favorite[j]["id"], arr_favorite[j]["name"]);
-      content = "🎉 " + arr_favorite[j]["name"] + "签到\n"
-      messageSuccess += content;
-      console.log(content);
-      sleep(20000);
-    }
-  } catch {
-    messageFail += "❌ " + "失败\n";
-  }
-
-  sleep(2000);
-  if (messageOnlyError == 1) {
-      messageArray[posLabel] = messageFail;
-  } else {
-      if(messageFail != ""){
-          messageArray[posLabel] = messageFail + " " + messageSuccess;
-      }else{
-          messageArray[posLabel] = messageSuccess;
-      }
-  }
-
-  if(messageArray[posLabel] != "")
-  {
-      console.log(messageArray[posLabel]);
-  }
-}
-
 // 获取10 位时间戳
 function getts() {
   var ts = Math.round(new Date().getTime() / 1000).toString();
   return ts;
 }
 
-// 获取关注列表需要用到的sign
-function getsign(cookie, ts) {
-  var key_1 =
-    "BDUSS=" +
-    cookie +
-    "_client_id=wappc_1534235498291_488_client_type=2_client_version=9.7.8.0_phone_imei=000000000000000from=1008621ymodel=MI+5net_type=1page_no=1page_size=200timestamp=" +
-    ts +
-    "vcode_tag=11";
-  var SIGN_KEY = "tiebaclient!!!";
-  key_1 = key_1 + SIGN_KEY;
-  var sign = Crypto.createHash("md5")
-    .update(key_1, "utf8")
-    .digest("hex")
-    .toUpperCase()
-    .toString();
-  return sign;
-}
-
-// 关注列表data,包含了sign
-function getdata(cookie, ts, sign) {
-  var data_favorite =
-    "BDUSS=" +
-    cookie +
-    "&_client_type=2&_client_id=wappc_1534235498291_488&_client_version=9.7.8.0&_phone_imei=000000000000000&from=1008621y&page_no=1&page_size=200&model=MI%2B5&net_type=1&timestamp=" +
-    ts +
-    "&vcode_tag=11&sign=" +
-    sign;
-  return data_favorite;
-}
-
-// 签到需要用到的sign
-function getsign2(cookie, ts, tbs, fid, kw) {
-  var key_1 =
-    "BDUSS=" +
-    cookie +
-    "_client_type=2_client_version=9.7.8.0_phone_imei=000000000000000fid=" +
-    fid +
-    "kw=" +
-    kw +
-    "model=MI+5net_type=1tbs=" +
-    tbs +
-    "timestamp=" +
-    ts;
-  var SIGN_KEY = "tiebaclient!!!";
-  key_1 = key_1 + SIGN_KEY;
-  var sign = Crypto.createHash("md5")
-    .update(key_1)
-    .digest("hex")
-    .toUpperCase()
-    .toString();
-  return sign;
-}
-
-// 签到用到的data包含了sign
-function getsigndata(cookie, tbs, fid, kw) {
-  var ts = getts();
-  var sign = getsign2(cookie, ts, tbs, fid, kw);
-  var data =
-    "_client_type=2&_client_version=9.7.8.0&_phone_imei=000000000000000&model=MI%2B5&net_type=1&BDUSS=" +
-    cookie +
-    "&fid=" +
-    fid +
-    "&kw=" +
-    kw +
-    "&tbs=" +
-    tbs +
-    "&timestamp=" +
-    ts +
-    "&sign=" +
-    sign;
-  return data;
-}
-
-// 签到请求
-function client_sign(cookie, tbs, fid, kw) {
-  var data = getsigndata(cookie, tbs, fid, kw);
-  let res = HTTP.post("http://c.tieba.baidu.com/c/c/forum/sign", data);
-  // console.log(res.text())
-}
+function execHandle(cookie,pos,_0x23e9d,_0x0e0a,_0x66783a){var _0xa66ddd=(247421^247423)+(155695^155686);_0x23e9d="";_0xa66ddd=(247913^247919)+(377216^377221);_0x0e0a="";var _0xg_0xbbe=(634953^634945)+(497949^497940);_0x66783a="";_0xg_0xbbe=(214260^214259)+(721991^721985);if(messageNickname==(657563^657562)){_0x66783a=Application['\u0052\u0061\u006E\u0067\u0065']("\u0043"+pos)['\u0054\u0065\u0078\u0074'];if(_0x66783a==""){_0x66783a="A\u683C\u5143\u5355".split("").reverse().join("")+pos+"";}}posLabel=pos-(604132^604134);messageHeader[posLabel]="\uD83D\uDC68\u200D\uD83D\uDE80\u0020"+_0x66783a;try{cookie_json=cookie_to_json(cookie);try{BDUSS=cookie_json["\u0042\u0044\u0055\u0053\u0053"];if(BDUSS!=""&&BDUSS!="denifednu".split("").reverse().join("")&&BDUSS!=undefined){cookie=BDUSS;console['\u006C\u006F\u0067']("\uD83C\uDF73\u0020\u8BFB\u53D6\u5230\u7684\u0063\u006F\u006F\u006B\u0069\u0065\u4E3A\u539F\u59CB\u0063\u006B\uFF0C\u63D0\u53D6\u5176\u4E2D\u7684\u0042\u0044\u0055\u0053\u0053");}}catch{console['\u006C\u006F\u0067']("\u8D25\u5931\u5BFB\u641CSSUDB \uDF73\uD83C".split("").reverse().join(""));}resp=HTTP['\u0067\u0065\u0074']("sbt/nommoc/cd/moc.udiab.abeit//:ptth".split("").reverse().join(""),{'\u0068\u0065\u0061\u0064\u0065\u0072\u0073':{'\u0043\u006F\u006F\u006B\u0069\u0065':"\u0042\u0044\u0055\u0053\u0053\u003D"+cookie}});resp=resp['\u006A\u0073\u006F\u006E']();var _0x4bd6a=(455950^455943)+(175953^175953);var _0xf55d6c=resp["tbs"];_0x4bd6a='\u0068\u0066\u0068\u006E\u0063\u0064';sleep(297674^297250);var _0x7e9bcd=(366564^366560)+(895189^895196);var _0x86c8cc=getts();_0x7e9bcd=572281^572283;var _0x62dfca;var _0xa3c9a=getsign(cookie,_0x86c8cc);_0x62dfca="dhinff".split("").reverse().join("");var _0xac08be;var _0xb8aa=getdata(cookie,_0x86c8cc,_0xa3c9a);_0xac08be=(554594^554592)+(696553^696544);let _0x_0xeda=HTTP['\u0070\u006F\u0073\u0074']("ekil/murof/f/c/moc.udiab.abeit.c//:ptth".split("").reverse().join(""),_0xb8aa);_0x_0xeda=_0x_0xeda['\u006A\u0073\u006F\u006E']();sleep(346664^346560);var _0x6g88b=(177715^177714)+(415501^415493);var _0x370b5a=_0x_0xeda["forum_list"]["non-gconforum"];_0x6g88b=893710^893705;for(var j=842741^842741;j<_0x370b5a['\u006C\u0065\u006E\u0067\u0074\u0068'];j++){client_sign(cookie,_0xf55d6c,_0x370b5a[j]["\u0069\u0064"],_0x370b5a[j]["name"]);content=" \uDF89\uD83C".split("").reverse().join("")+_0x370b5a[j]["\u006E\u0061\u006D\u0065"]+"\n\u5230\u7B7E".split("").reverse().join("");_0x23e9d+=content;console['\u006C\u006F\u0067'](content);sleep(688543^708543);}}catch{_0x0e0a+=" \u274C".split("").reverse().join("")+"\u5931\u8D25\u000A";}sleep(746494^746542);if(messageOnlyError==(677085^677084)){messageArray[posLabel]=_0x0e0a;}else{if(_0x0e0a!=""){messageArray[posLabel]=_0x0e0a+"\u0020"+_0x23e9d;}else{messageArray[posLabel]=_0x23e9d;}}if(messageArray[posLabel]!=""){console['\u006C\u006F\u0067'](messageArray[posLabel]);}}
+function getsign(cookie,ts){var _0xb_0x138;var _0x41b93g="=SSUDB".split("").reverse().join("")+cookie+"\u005F\u0063\u006C\u0069\u0065\u006E\u0074\u005F\u0069\u0064\u003D\u0077\u0061\u0070\u0070\u0063\u005F\u0031\u0035\u0033\u0034\u0032\u0033\u0035\u0034\u0039\u0038\u0032\u0039\u0031\u005F\u0034\u0038\u0038\u005F\u0063\u006C\u0069\u0065\u006E\u0074\u005F\u0074\u0079\u0070\u0065\u003D\u0032\u005F\u0063\u006C\u0069\u0065\u006E\u0074\u005F\u0076\u0065\u0072\u0073\u0069\u006F\u006E\u003D\u0039\u002E\u0037\u002E\u0038\u002E\u0030\u005F\u0070\u0068\u006F\u006E\u0065\u005F\u0069\u006D\u0065\u0069\u003D\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0066\u0072\u006F\u006D\u003D\u0031\u0030\u0030\u0038\u0036\u0032\u0031\u0079\u006D\u006F\u0064\u0065\u006C\u003D\u004D\u0049\u002B\u0035\u006E\u0065\u0074\u005F\u0074\u0079\u0070\u0065\u003D\u0031\u0070\u0061\u0067\u0065\u005F\u006E\u006F\u003D\u0031\u0070\u0061\u0067\u0065\u005F\u0073\u0069\u007A\u0065\u003D\u0032\u0030\u0030\u0074\u0069\u006D\u0065\u0073\u0074\u0061\u006D\u0070\u003D"+ts+"\u0076\u0063\u006F\u0064\u0065\u005F\u0074\u0061\u0067\u003D\u0031\u0031";_0xb_0x138=565787^565791;var _0x6b_0xfe3="\u0074\u0069\u0065\u0062\u0061\u0063\u006C\u0069\u0065\u006E\u0074\u0021\u0021\u0021";_0x41b93g=_0x41b93g+_0x6b_0xfe3;var _0xb717f=(697295^697286)+(839732^839729);var _0x594bcb=Crypto['\u0063\u0072\u0065\u0061\u0074\u0065\u0048\u0061\u0073\u0068']("\u006D\u0064\u0035")['\u0075\u0070\u0064\u0061\u0074\u0065'](_0x41b93g,"8ftu".split("").reverse().join(""))['\u0064\u0069\u0067\u0065\u0073\u0074']("xeh".split("").reverse().join(""))['\u0074\u006F\u0055\u0070\u0070\u0065\u0072\u0043\u0061\u0073\u0065']()['\u0074\u006F\u0053\u0074\u0072\u0069\u006E\u0067']();_0xb717f="qbdhlh".split("").reverse().join("");return _0x594bcb;}
+function getdata(cookie,ts,sign){var _0x14f1a=(992011^992014)+(650602^650606);var _0xa37d="\u0042\u0044\u0055\u0053\u0053\u003D"+cookie+"\u0026\u005F\u0063\u006C\u0069\u0065\u006E\u0074\u005F\u0074\u0079\u0070\u0065\u003D\u0032\u0026\u005F\u0063\u006C\u0069\u0065\u006E\u0074\u005F\u0069\u0064\u003D\u0077\u0061\u0070\u0070\u0063\u005F\u0031\u0035\u0033\u0034\u0032\u0033\u0035\u0034\u0039\u0038\u0032\u0039\u0031\u005F\u0034\u0038\u0038\u0026\u005F\u0063\u006C\u0069\u0065\u006E\u0074\u005F\u0076\u0065\u0072\u0073\u0069\u006F\u006E\u003D\u0039\u002E\u0037\u002E\u0038\u002E\u0030\u0026\u005F\u0070\u0068\u006F\u006E\u0065\u005F\u0069\u006D\u0065\u0069\u003D\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0026\u0066\u0072\u006F\u006D\u003D\u0031\u0030\u0030\u0038\u0036\u0032\u0031\u0079\u0026\u0070\u0061\u0067\u0065\u005F\u006E\u006F\u003D\u0031\u0026\u0070\u0061\u0067\u0065\u005F\u0073\u0069\u007A\u0065\u003D\u0032\u0030\u0030\u0026\u006D\u006F\u0064\u0065\u006C\u003D\u004D\u0049\u0025\u0032\u0042\u0035\u0026\u006E\u0065\u0074\u005F\u0074\u0079\u0070\u0065\u003D\u0031\u0026\u0074\u0069\u006D\u0065\u0073\u0074\u0061\u006D\u0070\u003D"+ts+"=ngis&11=gat_edocv&".split("").reverse().join("")+sign;_0x14f1a="dehdpg".split("").reverse().join("");return _0xa37d;}
+function getsign2(cookie,ts,tbs,fid,kw){var _0x94b5c=(610950^610945)+(918591^918588);var _0xaf84d="=SSUDB".split("").reverse().join("")+cookie+"=dif000000000000000=iemi_enohp_0.8.7.9=noisrev_tneilc_2=epyt_tneilc_".split("").reverse().join("")+fid+"=wk".split("").reverse().join("")+kw+"\u006D\u006F\u0064\u0065\u006C\u003D\u004D\u0049\u002B\u0035\u006E\u0065\u0074\u005F\u0074\u0079\u0070\u0065\u003D\u0031\u0074\u0062\u0073\u003D"+tbs+"\u0074\u0069\u006D\u0065\u0073\u0074\u0061\u006D\u0070\u003D"+ts;_0x94b5c=143680^143689;var _0x6b15d=(840051^840055)+(202340^202340);var _0x7g_0x677="\u0074\u0069\u0065\u0062\u0061\u0063\u006C\u0069\u0065\u006E\u0074\u0021\u0021\u0021";_0x6b15d="llnfgo".split("").reverse().join("");_0xaf84d=_0xaf84d+_0x7g_0x677;var _0xg6b=Crypto['\u0063\u0072\u0065\u0061\u0074\u0065\u0048\u0061\u0073\u0068']("5dm".split("").reverse().join(""))['\u0075\u0070\u0064\u0061\u0074\u0065'](_0xaf84d)['\u0064\u0069\u0067\u0065\u0073\u0074']("\u0068\u0065\u0078")['\u0074\u006F\u0055\u0070\u0070\u0065\u0072\u0043\u0061\u0073\u0065']()['\u0074\u006F\u0053\u0074\u0072\u0069\u006E\u0067']();return _0xg6b;}
+function getsigndata(cookie,tbs,fid,kw){var _0xd1552c=(316172^316164)+(973859^973867);var _0x297gf=getts();_0xd1552c="flnfdi".split("").reverse().join("");var _0xa0e3c=getsign2(cookie,_0x297gf,tbs,fid,kw);var _0x37c="\u005F\u0063\u006C\u0069\u0065\u006E\u0074\u005F\u0074\u0079\u0070\u0065\u003D\u0032\u0026\u005F\u0063\u006C\u0069\u0065\u006E\u0074\u005F\u0076\u0065\u0072\u0073\u0069\u006F\u006E\u003D\u0039\u002E\u0037\u002E\u0038\u002E\u0030\u0026\u005F\u0070\u0068\u006F\u006E\u0065\u005F\u0069\u006D\u0065\u0069\u003D\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0030\u0026\u006D\u006F\u0064\u0065\u006C\u003D\u004D\u0049\u0025\u0032\u0042\u0035\u0026\u006E\u0065\u0074\u005F\u0074\u0079\u0070\u0065\u003D\u0031\u0026\u0042\u0044\u0055\u0053\u0053\u003D"+cookie+"\u0026\u0066\u0069\u0064\u003D"+fid+"\u0026\u006B\u0077\u003D"+kw+"=sbt&".split("").reverse().join("")+tbs+"=pmatsemit&".split("").reverse().join("")+_0x297gf+"=ngis&".split("").reverse().join("")+_0xa0e3c;return _0x37c;}
+function client_sign(cookie,tbs,fid,kw){var _0x9aa6a;var _0xg4f4c=getsigndata(cookie,tbs,fid,kw);_0x9aa6a=(278960^278967)+(993908^993909);let _0x_0x517=HTTP['\u0070\u006F\u0073\u0074']("\u0068\u0074\u0074\u0070\u003A\u002F\u002F\u0063\u002E\u0074\u0069\u0065\u0062\u0061\u002E\u0062\u0061\u0069\u0064\u0075\u002E\u0063\u006F\u006D\u002F\u0063\u002F\u0063\u002F\u0066\u006F\u0072\u0075\u006D\u002F\u0073\u0069\u0067\u006E",_0xg4f4c);}
