@@ -5,7 +5,7 @@
     更新时间：20250112
     环境变量名：hzh
     环境变量值：cookie
-    备注：签到。抓app签到的包。
+    备注：抓app签到的包。
 */
 
 const logo = "艾默库 : https://github.com/imoki/sign_script"    // 仓库地址

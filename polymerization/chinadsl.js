@@ -5,8 +5,7 @@
     更新时间：20241226
     环境变量名：无
     环境变量值：无
-    备注：自动签到得积分、做任务、领取猫粮
-          cookie填写宽带技术网网页版中获取的refresh_token。F12 -> NetWork(中文名叫"网络") ->https://www.chinadsl.net -> cookie
+    备注：cookie填写宽带技术网网页版中获取的refresh_token。F12 -> NetWork(中文名叫"网络") ->https://www.chinadsl.net -> cookie
           宽带技术网网址:https://www.chinadsl.net
 */
 

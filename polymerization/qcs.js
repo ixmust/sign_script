@@ -5,7 +5,7 @@
     更新时间：20241025
     环境变量名：qcs
     环境变量值：authorization#openId#unionId
-    备注：签到、做任务、领取回馈金。需要authorization、openId、unionId，抓小程序的包。
+    备注：需要authorization、openId、unionId，抓小程序的包。
 */
 
 const logo = "艾默库 : https://github.com/imoki/sign_script"    // 仓库地址
