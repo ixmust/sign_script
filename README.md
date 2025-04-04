@@ -2,7 +2,7 @@
     <img src="https://socialify.git.ci/imoki/sign_script/image?description=1&font=Rokkitt&forks=1&issues=1&language=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark">
 <div>
 
-## 🎉 感谢所有做出贡献的人！ 
+## 🎉 感谢所有做出贡献的开发者！ 
 <div align="center" style="display:flex;flex-wrap:wrap;justify-content:center;">
     <a href="https://github.com/jarryyen" style="text-align: center;">
         <img src="https://avatars.githubusercontent.com/u/11880312?v=4" width="50" height="50" style="border-radius:50%; margin:10px;">
@@ -27,6 +27,9 @@
     <a href="https://space.bilibili.com/473278350/" style="text-align: center;">
         <img src="https://i1.hdslb.com/bfs/face/1d433d7c2d02d04b67b2102928d1c7c24d22f430.jpg" width="50" height="50" style="border-radius: 50%; margin: 10px;">
     </a>
+    <a href="https://github.com/darkbfly" style="text-align: center;">
+        <img src="https://avatars.githubusercontent.com/u/9347954" width="50" height="50" style="border-radius: 50%; margin: 10px;">
+    </a>
 </div>
 <!--
 ## ⚠ 请遵循以下几点来使用
@@ -40,7 +43,6 @@
 1. 低代码配置系统:通过表格驱动设计实现零编码脚本管理。 
 2. 多版本兼容架构:采用适配器模式同时支持 Airscript 1.0/2.0 环境，具备较强 兼容性。 
 3. 多表管理框架:设计了多表配置结构和管理方式，使项目具备智能生成初始表格配置、配置动态更新、多表统一管理、多渠道消息推送等能力。   
-4. 智能分析引擎:提供自由定制 ai 提示词来分析运行结果状态功能。  
 
 ## 📌 特别声明
 
