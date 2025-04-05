@@ -2,7 +2,7 @@
     <img src="https://socialify.git.ci/imoki/sign_script/image?description=1&font=Rokkitt&forks=1&issues=1&language=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark">
 <div>
 
-## 🎉 感谢所有做出贡献的开发者！ 
+## 🎉 感谢所有贡献者！ 
 <div align="center" style="display:flex;flex-wrap:wrap;justify-content:center;">
     <a href="https://github.com/jarryyen" style="text-align: center;">
         <img src="https://avatars.githubusercontent.com/u/11880312?v=4" width="50" height="50" style="border-radius:50%; margin:10px;">
@@ -35,6 +35,24 @@
     </a>
     <a style="text-align: center;">
         <img src="https://s21.ax1x.com/2025/04/05/pE6O3Mn.jpg" width="50" height="50" style="border-radius: 50%; margin: 10px;">
+    </a>
+    <a style="text-align: center;">
+        <img src="https://s21.ax1x.com/2025/04/05/pE6XhkT.jpg" width="50" height="50" style="border-radius: 50%; margin: 10px;">
+    </a>
+    <a style="text-align: center;">
+        <img src="https://s21.ax1x.com/2025/04/05/pE6XR00.jpg" width="50" height="50" style="border-radius: 50%; margin: 10px;">
+    </a>
+    <a style="text-align: center;">
+        <img src="https://s21.ax1x.com/2025/04/05/pE6XW7V.md.jpg" width="50" height="50" style="border-radius: 50%; margin: 10px;">
+    </a>
+    <a style="text-align: center;">
+        <img src="https://s21.ax1x.com/2025/04/05/pE6X5hF.jpg" width="50" height="50" style="border-radius: 50%; margin: 10px;">
+    </a>
+    <a style="text-align: center;">
+        <img src="https://s21.ax1x.com/2025/04/05/pE6Xop4.md.jpg" width="50" height="50" style="border-radius: 50%; margin: 10px;">
+    </a>
+    <a style="text-align: center;">
+        <img src="https://s21.ax1x.com/2025/04/05/pE6X4tU.md.jpg" width="50" height="50" style="border-radius: 50%; margin: 10px;">
     </a>
 </div>
 <!--
