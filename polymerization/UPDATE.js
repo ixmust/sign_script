@@ -104,6 +104,7 @@ var configBody = [
     { name: 'ciba', note: '词霸每日一句',},
     { name: 'deepseek', note: 'deepseek分析工具',},
     { name: 'remind', note: '日期提醒',},
+    { name: 'qrcode', note: '二维码生成',},
 
     // { name: '（修改这里）', note: '（修改这里）',},  // 添加新增内容
 ];
@@ -253,6 +254,13 @@ var subConfigRemind = [
   ['xxxxxxxx2', '否', '昵称2', '', '🥳提醒到啦！', '阳历', '11', '22']
 ]
 
+// 定制化分配置表内容，qrcode
+var subConfigQrcode = [
+  ['cookie(默认20个)', '是否执行(是/否)', '账号名称(可不填写)', '二维码内容', '二维码(自动生成)'],
+  ['xxxxxxxx1', '是', '昵称1', 'github.com/imoki', ''],
+  ['xxxxxxxx2', '否', '昵称2', '', '']
+]
+
 // 定制化表
 var subConfig = {
   "ddmc"  : subConfigDdmc, 
@@ -268,6 +276,7 @@ var subConfig = {
   "ciba":subConfigCiba,
   "deepseek" : subConfigDeepseek,
   "remind" : subConfigRemind,
+  "qrcode" : subConfigQrcode,
 }
 // var mosaic = "xxxxxxxx" // 马赛克
 // var strFail = "否"
