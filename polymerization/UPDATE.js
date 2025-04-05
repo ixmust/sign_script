@@ -1,11 +1,10 @@
 /*
     脚本名称：UPDATE.js
     脚本兼容: airsript 1.0、airscript 2.0
-    更新时间：20250311
+    更新时间：20250405
     备注：更新脚本。用于自动生成表格，以及追加表格数据
           适配airsript 1.0版本及airscript 2.0版本
     其他：若想添加新内容，请搜索（修改这里），按照格式修改
-    AI：增加deepseek分析工具
 */
 
 var confiWorkbook = 'CONFIG'  // 主配置表名称
@@ -53,7 +52,7 @@ var configBody = [
     { name: 'xmly', note: '喜马拉雅',},
     { name: 'xxx', note: '', isAlive: '否',},
     { name: 'en', note: '希沃白板',},
-    { name: 'xmc', note: '小木虫',},
+    { name: 'xxx', note: '', isAlive: '否',},
     { name: 'quark', note: '夸克网盘',},
     { name: 'huluxia', note: '葫芦侠3楼',},
     { name: 'xxx', note: '', isAlive: '否',},
@@ -61,13 +60,13 @@ var configBody = [
     { name: 'ztebbs', note: '中兴社区',},
     { name: 'mi', note: '小米商城',},
     { name: 'kanxue', note: '看雪论坛',},
-    { name: 'xxx', note: 'xxx', isAlive: '否',},
+    { name: 'xxx', note: '', isAlive: '否',},
     { name: 'vivo', note: 'vivo社区',},
     { name: 'xxx', note: '', isAlive: '否',},
-    { name: 'xxx', note: 'xxx',},
+    { name: 'xxx', note: '', isAlive: '否',},
     { name: 'golo', note: 'golo汽修大师',},
     { name: 'xxx', note: '', isAlive: '否',},
-    { name: 'aliyun', note: '阿里云盘(自动更新token版)',},
+    { name: 'xxx', note: '', isAlive: '否',},
     { name: 'chinadsl', note: '宽带技术网',},
     { name: 'xxx', note: '', isAlive: '否',},
     { name: 'xxx', note: '', isAlive: '否',},
@@ -86,24 +85,25 @@ var configBody = [
     { name: 'kyt', note: '科研通',},
     { name: 'parsdata', note: '伊朗域名注册优惠码',},
     { name: 'quarksave', note: '夸克订阅更新自动转存',},
-    { name: 'xxx', note: 'xxx', isAlive: '否',},
     { name: 'xxx', note: '', isAlive: '否',},
     { name: 'xxx', note: '', isAlive: '否',},
-    { name: 'yhsh', note: '永辉生活',},
+    { name: 'xxx', note: '', isAlive: '否',},
+    { name: 'xxx', note: '', isAlive: '否',},
     { name: 'xpnc', note: '兴攀农场',},
-    { name: 'xxx', note: 'xxx', isAlive: '否',},
-    { name: 'syns', note: '所有女生',},
+    { name: 'xxx', note: '', isAlive: '否',},
+    { name: 'xxx', note: '', isAlive: '否',},
     { name: 'qcs', note: '屈臣氏',},
     { name: 'hdl', note: '海底捞',},
     { name: 'hzh', note: '华住会',},
     { name: 'eswxlt', note: '恩山无线论坛',},
-    { name: 'steamtools', note: 'steamtools',},
+    { name: 'xxx', note: '', isAlive: '否',},
     { name: 'xmdl', note: '熊猫代理',},
-    { name: 'linkai', note: 'LinkAi',},
+    { name: 'xxx', note: '', isAlive: '否',},
     { name: 'hfweather', note: '和风天气', pushPriority: '1',},
-    { name: 'dml', note: '达美乐',},
+    { name: 'xxx', note: '', isAlive: '否',},
     { name: 'ciba', note: '词霸每日一句',},
     { name: 'deepseek', note: 'deepseek分析工具',},
+    { name: 'remind', note: '日期提醒',},
 
     // { name: '（修改这里）', note: '（修改这里）',},  // 添加新增内容
 ];
@@ -183,13 +183,6 @@ var subConfigGolo = [
   ['xxxxxxxx2', '否', '昵称2', '此格填用户名', '此格填密码']
 ]
 
-// 定制化分配置表内容，阿里云盘(自动更新token)
-var subConfigAliyunToken = [
-  ['cookie(默认20个)', '是否执行(是/否)', '账号名称(可不填写)', '是否领取自动备份的奖励(是/否)', 'token登陆时间', '签到结果'],
-  ['xxxxxxxx1', '是', '昵称1', '否', '无', '无'],
-  ['xxxxxxxx2', '否', '昵称2', '否', '无', '无']
-]
-
 // 定制化分配置表内容，hxek
 var subConfigHxek = [
   ['cookie(默认20个)', '是否执行(是/否)', '账号名称(可不填写)', "memberId", "enterpriseId"],
@@ -253,12 +246,18 @@ var subConfigDeepseek = [
   ['xxxxxxxx2', '否', '昵称2', '', '']
 ]
 
+// 定制化分配置表内容，remind
+var subConfigRemind = [
+  ['cookie(默认20个)', '是否执行(是/否)', '账号名称(可不填写)', '提醒日期(自动生成)', '标题', '提醒单位', '月', '日'],
+  ['xxxxxxxx1', '是', '昵称1', '', '🎂生日到啦！', '农历', '1', '1'],
+  ['xxxxxxxx2', '否', '昵称2', '', '🥳提醒到啦！', '阳历', '11', '22']
+]
+
 // 定制化表
 var subConfig = {
   "ddmc"  : subConfigDdmc, 
   "wps"  : subConfigWps,
   "golo"  : subConfigGolo,
-  "aliyun" : subConfigAliyunToken,
   "hxek" : subConfigHxek,
   "parsdata":subConfigParsdata,
   "hdl":subConfigHdl,
@@ -268,6 +267,7 @@ var subConfig = {
   "hfweather":subConfigHfweather,
   "ciba":subConfigCiba,
   "deepseek" : subConfigDeepseek,
+  "remind" : subConfigRemind,
 }
 // var mosaic = "xxxxxxxx" // 马赛克
 // var strFail = "否"
@@ -364,7 +364,7 @@ function ActivateSheet(sheetName) {
   } catch {
     flag = 0;
     // console.log("📢 无法激活工作表，工作表可能不存在")
-    console.log("🪄 创建工作表：" + sheetName)
+    // console.log("🪄 创建工作表：" + sheetName)
     createSheet(sheetName)
   }
   return flag;
